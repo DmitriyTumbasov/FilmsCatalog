@@ -1,0 +1,92 @@
+﻿@using FilmsCatalog.ViewModels
+@model CreateOrUpdateFilmViewModel
+@{
+    var pageTitle = Model.Id == 0 ? "Добавление фильма" : $"Редактирование фильма \"{Model.Name}\"";
+    ViewData["Title"] = pageTitle;
+}
+
+
+<h2>@pageTitle</h2>
+
+<form asp-controller="Film" asp-action="CreateOrUpdate" method="post" style="margin-top: 2em;" enctype="multipart/form-data">
+    <div class="row justify-content-around">
+        <div class="col-md-4">
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-6 col-12">
+                    <label asp-for="Name"></label>
+                    <input asp-for="Name" class="form-control">
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-6 col-12">
+                    <label asp-for="Description"></label>
+                    <input asp-for="Description" class="form-control">
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-6 col-12">
+                    <label asp-for="Year"></label>
+                    <input asp-for="Year" class="form-control">
+                    <span asp-validation-for="Year" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-6 col-12">
+                    <label asp-for="FilmDirector"></label>
+                    <input asp-for="FilmDirector" class="form-control">
+                    <span asp-validation-for="FilmDirector" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="form-row">
+                <div class="form-group">
+                    <label asp-for="ImageFile" class="control-label"></label>
+                    <input asp-for="ImageFile" type="file" accept="image/*" />
+                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-row">
+                @if (Model.OldImageFile != null)
+                {
+                    <img id="ImageFilePreview" src="data:image;base64,@System.Convert.ToBase64String(Model.OldImageFile)" />
+                }
+                else
+                {
+                    <img style="display: none" id="ImageFilePreview" src="#" />
+                }
+            </div>
+        </div>
+    </div>
+
+    <input type="hidden" asp-for="Id">
+    <input type="hidden" asp-for="OldImageFile">
+    <button type="submit" class="btn btn-outline-primary">Сохранить</button>
+</form>
+
+@section Scripts{ 
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#ImageFilePreview').attr('src', e.target.result);
+                $('#ImageFilePreview').show();
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#ImageFile").change(function () {
+        readURL(this);
+    });
+</script>
+}
+
+

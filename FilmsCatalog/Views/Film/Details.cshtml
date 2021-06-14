@@ -1,0 +1,54 @@
+﻿@using FilmsCatalog.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<User> UserManager
+
+@model Film
+
+@{
+    ViewData["Title"] = Model.Name;
+    var loggedInUser = UserManager.GetUserAsync(User).Result;
+}
+
+<div class="row justify-content-between">
+    <div class="col-md-4">
+        <a class="btn btn-outline-primary" href="#" onclick="window.history.go(-1); return false;">Назад</a>
+    </div>
+
+    <div class="col-md-4 text-right">
+        @if (loggedInUser != null && Model.Author == loggedInUser)
+        {
+            <a class="btn btn-outline-primary" href="@Url.ActionLink("Edit", "Film", new { id = Model.Id })">Редактировать</a>
+        }
+    </div>
+</div>
+
+<div class="row mt-4 justify-content-center">
+    <div class="col-md-4">
+        <h2>
+            @Model.Name
+            (@Model.Year)
+        </h2>
+        <p>
+            @Model.Description
+        </p>
+        <p>
+            Режиссер: @Model.FilmDirector
+        </p>
+    </div>
+    <div class="col-md-4">
+        @if (Model.ImageFile != null)
+        {
+            <img src="data:image;base64,@System.Convert.ToBase64String(Model.ImageFile)" />
+        }
+        else
+        {
+            <span>Нет постера</span>
+        }
+    </div>
+</div>
+
+
+
+
+
+

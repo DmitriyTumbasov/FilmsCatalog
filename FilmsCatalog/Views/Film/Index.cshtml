@@ -1,0 +1,15 @@
+﻿@using FilmsCatalog.ViewModels
+@model FilmIndexViewModel
+
+@{
+    ViewData["Title"] = "Film Home Page";
+}
+
+@Html.Partial("Paging", new PagingViewModel { Action = "Index", Controller = "Film", CurrentPageNo = Model.PageNo, PageSize = Model.PageSize, TotalCount = Model.TotalCount, TotalPages = Model.TotalPages })
+
+<div class="list-group">
+    @foreach (var film in Model.Films)
+    {
+        <a href='@Url.ActionLink("Details", "Film", new { id = film.Id })' class="list-group-item list-group-item-action">@film.Name</a>
+    }
+</div>

@@ -1,0 +1,9 @@
+﻿@using FilmsCatalog.Data.Models
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+
+@model Film
+
+<div>
+    <a href='@Url.ActionLink("Details", "Film", new { id = Model.Id })'>@Model.Name</a>
+</div>

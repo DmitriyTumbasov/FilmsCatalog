@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
+using System.Security.Claims;
 
-namespace FilmsCatalog.Models
+namespace FilmsCatalog.Data.Models
 {
     public class User : IdentityUser
     {
